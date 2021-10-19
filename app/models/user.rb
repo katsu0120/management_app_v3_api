@@ -38,8 +38,18 @@ class User < ApplicationRecord
   def email_activated?
     users = User.where.not(id: id)
     users.find_by_activated(email).present?
-  end    
+  end
   
+  # リフレッシュトークンのJWT IDを記憶する
+  def remember(jti)
+    update!(refresh_jti: jti)
+  end
+  
+  # リフレッシュトークンのJWT IDを削除する
+  def forget
+    update!(refresh_jti: nil)
+  end
+
   private
 
     # email小文字化

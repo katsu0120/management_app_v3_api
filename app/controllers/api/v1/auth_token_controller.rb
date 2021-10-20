@@ -23,7 +23,7 @@ class Api::V1::AuthTokenController < ApplicationController
   # リフレッシュ
   def refresh
     @user = session_user
-    set_refresh_token_to_cookie
+    # set_refresh_token_to_cookie
     render json: login_response
   end
 

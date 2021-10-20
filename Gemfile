@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.0.4', '>= 6.0.4.1'
+gem 'rails', '6.1.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -32,6 +32,9 @@ gem 'hirb-unicode-steakknife', '~> 0.0.9'
 
 # パスワードを暗号化
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
+
+# jwt Doc: https://rubygems.org/gems/jwt
+gem 'jwt', '~> 2.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

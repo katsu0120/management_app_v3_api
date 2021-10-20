@@ -1,16 +1,7 @@
-class Api::V1::ProjectsController < ApplicationController
-  before_action :authenticate_user
+require 'test_helper'
 
-  def index
-    projects = []
-    date = Date.new(2021,4,1)
-    10.times do |n|
-      id = n + 1
-      name = "#{current_user.name} project #{id.to_s.rjust(2, "0")}"
-      updated_at = date + (id * 6).hours
-      projects << { id: id, name: name, updatedAt: updated_at }
-    end
-    # 本来はcurrent_user.projects
-    render json: projects
-  end
+class Api::V1::ProjectsControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
 end

@@ -6,6 +6,13 @@ Rails.application.routes.draw do
         post   :refresh, on: :collection
         delete :destroy, on: :collection
       end
+      resources :users do
+        post   :refresh, on: :collection
+        delete :destroy, on: :collection
+      end
+      
+      resources :hello, only: [:index]
+      resources :posts, only: [:index, :create]
 
       # projects
       resources :projects, only:[:index]

@@ -7,7 +7,6 @@ class Api::V1::UsersController < ApplicationController
   # refresh_tokenのInvalidJitErrorが発生した場合はカスタムエラーを返す
   rescue_from JWT::InvalidJtiError, with: :invalid_jti
 
-
   def new
     @user = User.new
   end
@@ -16,10 +15,8 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.update(activated: true)
     @user.save
-    # set_refresh_token_to_cookie
-    # @user.encode_access_token
+    set_refresh_token_to_cookie
     render json: login_response
-    # render json: @user
   end
 
   # リフレッシュ
@@ -116,6 +113,7 @@ class Api::V1::UsersController < ApplicationController
      msg = "Invalid jti for refresh token"
      render status: 401, json: { status: 401, error: msg }
    end
+
     def user_params
       params.require(:user).permit(:name, :email, :password )
     end

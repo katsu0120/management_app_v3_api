@@ -11,9 +11,6 @@ Rails.application.routes.draw do
         delete :destroy, on: :collection
       end
       
-      resources :hello, only: [:index]
-      resources :posts, only: [:index, :create]
-
       # projects
       resources :projects, only:[:index]
 

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users do
         post   :refresh, on: :collection
         delete :destroy, on: :collection
+        put    :update,  on: :collection
       end
       
       # projects

@@ -2,10 +2,9 @@ class Api::V1::UsersController < ApplicationController
 
   include UserSessionizeService
 
-  # 404エラーが発生した場合にヘッダーのみを返す
-  rescue_from UserAuth.not_found_exception_class, with: :not_found
-  # refresh_tokenのInvalidJitErrorが発生した場合はカスタムエラーを返す
-  rescue_from JWT::InvalidJtiError, with: :invalid_jti
+  def index 
+    render json: { id: current_user.id, name: current_user.name, email: current_user.email, user_profile: current_user.user_profile }
+  end
 
   def new
     @user = User.new
@@ -13,40 +12,22 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.update(activated: true)
     @user.save
+    @user.update(activated: true)
     set_refresh_token_to_cookie
     render json: login_response
   end
 
-  # リフレッシュ
-  def refresh
-    @user = session_user
-    # set_refresh_token_to_cookie
-    render json: login_response
-  end
-
-  # ログアウト
-  def destroy
-    delete_session if session_user.forget
-    cookies[session_key].nil? ?
-      head(:ok) : response_500("Could not delete session")
+  def update
+    @user = User.find_by(id_params)
+    # @user.update(edit_params)
+    @user.update(edit_params)
+    # @user.user_profile.update
+    # @user = @user.user_profile
+    render json: @user
   end
 
   private
-
-   # params[:email]からアクティブなユーザーを返す
-   def login_user
-     @_login_user ||= User.find_by_activated(user_params[:email])
-   end
-
-   # ログインユーザーが居ない、もしくはpasswordが一致しない場合404を返す
-   def authenticate
-     unless login_user.present? &&
-            login_user.authenticate(user_params[:password])
-       raise UserAuth.not_found_exception_class
-     end
-   end
 
    # refresh_tokenをcookieにセットする
    def set_refresh_token_to_cookie
@@ -102,22 +83,20 @@ class Api::V1::UsersController < ApplicationController
      encode_access_token.payload[:sub]
    end
 
-   # 404ヘッダーのみの返却を行う
-   # Doc: https://gist.github.com/mlanett/a31c340b132ddefa9cca
-   def not_found
-     head(:not_found)
+   def user_params
+     params.require(:user).permit(:name, :email, :password,)
    end
 
-   # decode jti != user.refresh_jti のエラー処理
-   def invalid_jti
-     msg = "Invalid jti for refresh token"
-     render status: 401, json: { status: 401, error: msg }
+   def id_params
+     params.require(:user).permit(:id)
    end
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password )
-    end
+   def edit_params
+    params.require(:user).permit(:name, :email, :password, :user_profile)
+  end
 
+
+   
     
 
 end

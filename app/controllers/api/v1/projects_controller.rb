@@ -10,6 +10,7 @@ class Api::V1::ProjectsController < ApplicationController
       updated_at = date + (id * 6).hours
       projects << { id: id, name: name, updatedAt: updated_at }
     end
+    
     # 本来はcurrent_user.projects
     render json: projects
   end

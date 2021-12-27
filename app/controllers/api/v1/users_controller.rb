@@ -3,7 +3,9 @@ class Api::V1::UsersController < ApplicationController
   include UserSessionizeService
 
   def index 
-    render json: { id: current_user.id, name: current_user.name, email: current_user.email, user_profile: current_user.user_profile }
+     @user = { id: current_user.id, name: current_user.name, email: current_user.email, user_profile: current_user.user_profile }
+    
+     render json: @user
   end
 
   def new
@@ -96,7 +98,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
 
-   
-    
+ 
 
 end

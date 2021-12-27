@@ -1,17 +1,30 @@
 class Api::V1::ProjectsController < ApplicationController
-  before_action :authenticate_user
 
   def index
-    projects = []
-    date = Date.new(2021,4,1)
-    10.times do |n|
-      id = n + 1
-      name = "#{current_user.name} project #{id.to_s.rjust(2, "0")}"
-      updated_at = date + (id * 6).hours
-      projects << { id: id, name: name, updatedAt: updated_at }
-    end
-    
-    # 本来はcurrent_user.projects
-    render json: projects
+    render json: current_user.projects
   end
+  
+  def create
+    @project = current_user.projects.create!(project_params)
+    # @project = current_user.projects
+    render json:  @project
+  end
+
+  def update
+    @project = current_user.projects.find_by(id_params)
+    @project.update(project_params)
+    render json: @project
+  end
+
+
+  private
+
+  def id_params
+    params.require(:project).permit(:id)
+  end
+
+  def project_params
+    params.require(:project).permit(:title, :content, :updated_at)
+  end
+
 end

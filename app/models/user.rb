@@ -4,6 +4,8 @@ class User < ApplicationRecord
   #Token生成モジュール
   include TokenGenerateService
   before_validation :downcase_email 
+  has_many :projects, dependent: :destroy
+
 
   # gem bcrypt
   has_secure_password

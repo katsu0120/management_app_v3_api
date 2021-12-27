@@ -13,7 +13,17 @@ Rails.application.routes.draw do
       end
       
       # projects
-      resources :projects, only:[:index]
+      resources :projects do
+        post   :refresh, on: :collection
+        delete :destroy, on: :collection
+        put    :update, on: :collection
+      end
+      # tasks
+      resources :tasks do
+        post   :refresh, on: :collection
+        delete :destroy, on: :collection
+        put    :update, on: :collection
+      end
 
     end
   end

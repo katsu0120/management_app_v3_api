@@ -1,7 +1,6 @@
 class Api::V1::TasksController < ApplicationController
  
   def index
-    # @tasks = current_user.projects.find_by(id: params[:id])&.tasks || []
     @tasks = current_user.projects.find_by(id: params[:id])&.tasks || []
     render json: @tasks
   end

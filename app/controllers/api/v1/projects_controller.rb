@@ -6,7 +6,6 @@ class Api::V1::ProjectsController < ApplicationController
   
   def create
     @project = current_user.projects.create!(project_params)
-    # @project = current_user.projects
     render json:  @project
   end
 

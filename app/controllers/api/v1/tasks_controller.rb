@@ -18,11 +18,11 @@ class Api::V1::TasksController < ApplicationController
     render json: @task
   end
   
-  # def destroy
-  #   @task = current_user.tasks.find_by(id_params)
-  #   @task.destroy
-  #   render json: @task
-  # end
+  def destroy
+    @task = current_user.projects.find_by(project_params).tasks.find_by(id_params)
+    @task.destroy
+    render json: @task
+  end
 
 
 

@@ -15,6 +15,12 @@ class Api::V1::ProjectsController < ApplicationController
     render json: @project
   end
 
+  def destroy
+    @project = current_user.projects.find_by(id_params)
+    @project.destroy
+    render json: @project
+  end
+
 
   private
 
@@ -23,7 +29,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title, :content, :updated_at)
+    params.require(:project).permit(:title, :content, :updated_at, :completed)
   end
 
 end

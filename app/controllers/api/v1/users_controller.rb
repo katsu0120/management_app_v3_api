@@ -15,9 +15,11 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    @user.update(activated: true)
-    set_refresh_token_to_cookie
-    render json: login_response
+    @user.send_activation_email
+    # @user.update(activated: true)
+    # set_refresh_token_to_cookie
+    render json: @user
+    # render json: login_response
   end
 
   def update

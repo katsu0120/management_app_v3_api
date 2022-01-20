@@ -58,6 +58,17 @@ class User < ApplicationRecord
     as_json(only: [:id, :name]).merge(payload).with_indifferent_access
   end
 
+  # アカウントを有効にする
+  def activate
+    update_attribute(:activated,    true)
+    # update_attribute(:activated_at, Time.zone.now)
+  end
+
+  # 有効化用のメールを送信する
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   private
 
     # email小文字化

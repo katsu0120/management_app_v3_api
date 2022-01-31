@@ -69,13 +69,6 @@ class User < ApplicationRecord
     # update_attribute(:activated_at, Time.zone.now)
   end
 
-  # 有効化用のメールを送信する
-  # def send_activation_email
-  #   mail = UserMailer.account_activation(self)
-  #   # emailをmailerアクションで送信する(8bit = 日本語文字化け対応)
-  #   mail.transport_encoding = "8bit" if Rails.env == "development"
-  #   mail.deliver_now
-  # end
 
   # 有効化用のメールを送信する
   def send_activation_email
@@ -96,11 +89,9 @@ class User < ApplicationRecord
   end
 
   # 有効化トークンとダイジェストを作成および代入する
-  def create_activation_digest
-    # self.activation_token  = self.to_refresh_token
-    self.activation_token  = self.to_access_token
-    # self.activation_token  = self.encode_access_token
-  end
+  # def create_activation_digest
+  #   self.activation_token  = self.to_access_token
+  # end
 
   private
 

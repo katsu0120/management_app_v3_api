@@ -1,0 +1,10 @@
+<h1>User#account_activation</h1>
+
+<p>こんにちは <%= @user.name %>様</p>
+<p>
+  こんにちは。こちらはテストを行っております。
+</p>
+<p><%=@user.email%></p>
+<p><%=@user.name%>様のトークンはこちら<%= @user.activation_token %></p>
+<<b><%= link_to "メールアドレスの認証", @url %></b>
+

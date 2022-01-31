@@ -25,6 +25,10 @@ Rails.application.routes.draw do
         put    :update, on: :collection
       end
 
+      resources :account_activations do
+        post   :refresh, on: :collection
+      end
+
     end
   end
 end

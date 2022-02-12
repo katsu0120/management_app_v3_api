@@ -6,7 +6,7 @@ class Api::V1::AccountActivationsController < ApplicationController
 
  def index
   @user = current_user
-  @user.update(activated: true)
+  @user.activate
   set_refresh_token_to_cookie
   render json: login_response
  end

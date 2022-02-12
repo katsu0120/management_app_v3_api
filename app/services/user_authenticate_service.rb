@@ -5,6 +5,13 @@ module UserAuthenticateService
     current_user.present? || unauthorized_user
   end
 
+  # 認証済み && メール認証済みのユーザーが居ればtrue、存在しない場合は401を返す(保護リソース用)
+  def authenticate_active_user
+    # falseの場合は右辺を実行
+    (current_user.present? && current_user.activated?) || unauthorized_user
+  
+  end
+
   private
 
     # リクエストヘッダートークンを取得する

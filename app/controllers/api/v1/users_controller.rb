@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    @user.activation_token = @user.to_access_token
+    @user.activation_token = @user.encode_access_token(payload = {lifetime:1.hours})
     @user.send_activation_email   
     render json: @user
   end
@@ -28,16 +28,16 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-   def user_params
-     params.require(:user).permit(:id, :name, :email, :password,)
-   end
+  def user_params
+    params.require(:user).permit(:id, :name, :email, :password,)
+  end
 
-   def id_params
-     params.require(:user).permit(:id)
-   end
+  def id_params
+    params.require(:user).permit(:id)
+  end
 
-   def edit_params
-    params.require(:user).permit(:name, :email, :password, :user_profile)
-   end
+  def edit_params
+  params.require(:user).permit(:name, :email, :password, :user_profile)
+  end
 
 end

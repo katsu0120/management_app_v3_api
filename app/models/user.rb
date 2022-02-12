@@ -5,15 +5,16 @@ class User < ApplicationRecord
   include TokenGenerateService
   before_validation :downcase_email 
   has_many :projects, dependent: :destroy
-
-  # authのcreate時にも発火してしまう可能性があるので検討
-  # before_create :create_activation_digest
+  has_many :companies, foreign_key: "owner_id", dependent: :destroy
+  has_many :related_companies, class_name: :CompanyUser, 
+                              foreign_key: "user_id"
+  has_many :following, through: :related_companies, source: :company
 
   # gem bcrypt
   has_secure_password
 
   # DBに保存せずに済む為、履歴を残さずにtokenを送れる仮想の登録場所のメソッド
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :activation_token, :reset_token
 
   validates :name, presence: true,
                    length: { maximum: 30, allow_blank: true }
@@ -68,11 +69,21 @@ class User < ApplicationRecord
     update_attribute(:activated, true)
     # update_attribute(:activated_at, Time.zone.now)
   end
-
+  
+  # アカウントを無効(不活性化)にする
+  def inactivate
+    update_attribute(:activated, false)
+    # update_attribute(:activated_at, Time.zone.now)
+  end
 
   # 有効化用のメールを送信する
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  # 有効化用のメールを送信する
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
   end
 
   # 渡された文字列のハッシュ値を返す
@@ -87,12 +98,7 @@ class User < ApplicationRecord
   def User.new_token
     SecureRandom.urlsafe_base64
   end
-
-  # 有効化トークンとダイジェストを作成および代入する
-  # def create_activation_digest
-  #   self.activation_token  = self.to_access_token
-  # end
-
+  
   private
 
     # email小文字化

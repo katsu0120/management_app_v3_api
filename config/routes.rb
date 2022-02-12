@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         post   :refresh, on: :collection
         delete :destroy, on: :collection
       end
+
       resources :users do
         post   :refresh, on: :collection
         delete :destroy, on: :collection
@@ -24,8 +25,31 @@ Rails.application.routes.draw do
         delete :destroy, on: :collection
         put    :update, on: :collection
       end
+      # カンパニー一覧
+      resources :companies do
+        post   :refresh, on: :collection
+        delete :destroy, on: :collection
+        put    :update, on: :collection
+      end
+      # 共有プロジェクト
+      resources :company_projects do
+        post   :refresh, on: :collection
+        delete :destroy, on: :collection
+        put    :update, on: :collection
+      end
+      
+      resources :account_activations, only:[:index] do
+        post   :refresh, on: :collection
+      end
 
-      resources :account_activations do
+       # password_resets
+       resources :password_resets do
+         post   :refresh, on: :collection
+         delete :destroy, on: :collection
+         put    :update, on: :collection
+       end
+      
+      resources :finders do
         post   :refresh, on: :collection
       end
 

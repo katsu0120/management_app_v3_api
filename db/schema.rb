@@ -10,18 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_19_041934) do
+ActiveRecord::Schema.define(version: 2022_02_03_041354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "companies", force: :cascade do |t|
+    t.bigint "owner_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_companies_on_owner_id"
+  end
+
+  create_table "company_users", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id", "user_id"], name: "index_company_users_on_company_id_and_user_id", unique: true
+    t.index ["company_id"], name: "index_company_users_on_company_id"
+    t.index ["user_id"], name: "index_company_users_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
+    t.bigint "company_id"
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.text "content", null: false
     t.boolean "completed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -47,4 +67,7 @@ ActiveRecord::Schema.define(version: 2021_12_19_041934) do
     t.text "user_profile"
   end
 
+  add_foreign_key "companies", "users", column: "owner_id"
+  add_foreign_key "company_users", "companies"
+  add_foreign_key "company_users", "users"
 end

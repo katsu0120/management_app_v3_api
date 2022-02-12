@@ -13,11 +13,17 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    @user.save
-    @user.activation_token = @user.encode_access_token(payload = {lifetime:1.hours})
-    @user.send_activation_email   
-    render json: @user
+    if @user = User.find_by_activated(user_params[:email])
+      error = { msg: "すでに会員登録されております", color: "#D50000" }
+      render json: error
+    else
+      @user = User.new(user_params)
+      @user.save
+      @user.activation_token = @user.encode_access_token(payload = {lifetime:1.hours})
+      @user.send_activation_email   
+      success = { msg: "ご登録のメールアドレスに認証メールをご送付させていただきました", color: "#00796B" }
+      render json: success
+    end
   end
 
   def update

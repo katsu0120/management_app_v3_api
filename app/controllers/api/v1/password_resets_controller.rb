@@ -15,10 +15,12 @@ class Api::V1::PasswordResetsController < ApplicationController
     if @user
       @user.reset_token = @user.encode_access_token(payload = {lifetime:1.hours})
       @user.send_password_reset_email
-      render json: @user
+      success = { msg: "認証メールを送付させて頂きました😄", color: "#00796B" }
+      render json: success
     else
-      msg = { content: "メールを送付しました", url: "pikawaka" }
-      render json: msg
+      # パスワードリセット時に会員がいない場合、会員がいませんとすると使われているメアドが特定される危険性がある。
+      error = { msg: "認証メールを送付させて頂きました😄", color: "#00796B" }
+      render json: error
     end
   end
 

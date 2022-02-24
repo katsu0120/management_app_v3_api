@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
       @user.save
       @user.activation_token = @user.encode_access_token(payload = {lifetime:1.hours})
       @user.send_activation_email   
-      success = { msg: "ご登録のメールアドレスに認証メールをご送付させていただきました", color: "#00796B" }
+      success = { msg: "ご登録のメールアドレスに認証メールをご送付させていただきました", color: "#0091EA" }
       render json: success
     end
   end

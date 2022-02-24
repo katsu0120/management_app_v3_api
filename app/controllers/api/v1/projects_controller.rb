@@ -1,7 +1,7 @@
 class Api::V1::ProjectsController < ApplicationController
 
   def index
-    render json: current_user.projects
+    render json: current_user.projects.where(company_id: nil)
   end
   
   def create

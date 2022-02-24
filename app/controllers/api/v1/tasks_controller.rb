@@ -8,8 +8,6 @@ class Api::V1::TasksController < ApplicationController
   def create
     @task = current_user.projects.find_by(project_params)&.tasks.create!(task_params)
     render json: @task
-    # @user = current_user
-    # render json: @user
   end
 
   def update

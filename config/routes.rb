@@ -8,45 +8,47 @@ Rails.application.routes.draw do
       end
 
       resources :users do
-        post   :refresh, on: :collection
         delete :destroy, on: :collection
         put    :update,  on: :collection
       end
       
       # projects
       resources :projects do
-        post   :refresh, on: :collection
         delete :destroy, on: :collection
         put    :update, on: :collection
       end
       # tasks
       resources :tasks do
-        post   :refresh, on: :collection
         delete :destroy, on: :collection
         put    :update, on: :collection
       end
       # カンパニー一覧
       resources :companies do
-        post   :refresh, on: :collection
+        put    :update,  on: :collection
         delete :destroy, on: :collection
-        put    :update, on: :collection
+      end
+      # カンパニー参加user
+      resources :company_users do
+        get    :owner,   on: :collection 
+        delete :destroy, on: :collection
       end
       # 共有プロジェクト
       resources :company_projects do
-        post   :refresh, on: :collection
+        put    :update,  on: :collection
         delete :destroy, on: :collection
-        put    :update, on: :collection
+      end
+      # 共有プロジェクトのtask
+      resources :company_tasks do
+        put    :update,  on: :collection
+        delete :destroy, on: :collection
       end
       
-      resources :account_activations, only:[:index] do
-        post   :refresh, on: :collection
-      end
+      resources :account_activations, only:[:index] 
 
        # password_resets
        resources :password_resets do
-         post   :refresh, on: :collection
+        put     :update,  on: :collection
          delete :destroy, on: :collection
-         put    :update, on: :collection
        end
       
       resources :finders do

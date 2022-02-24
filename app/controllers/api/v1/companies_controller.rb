@@ -26,6 +26,7 @@ class Api::V1::CompaniesController < ApplicationController
     company = current_user.companies.find_by(company_id_params)
     company.destroy
     render json: company
+    
   end
   
 

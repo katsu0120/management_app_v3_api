@@ -16,6 +16,12 @@ class Api::V1::CompanyProjectsController < ApplicationController
     render json: company_projects
   end
 
+  def destroy
+    company_projects =  current_user.following.find_by(company_params).projects.find_by(project_id_params)
+    company_projects.destroy
+    render json: company_projects
+  end
+
 
 
   private

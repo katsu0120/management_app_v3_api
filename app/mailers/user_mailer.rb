@@ -22,4 +22,10 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: "Mgt_Appパスワードリセットメール"
   end
 
+  def email_update(user, new_email, token)
+    @user = user
+    @url = "#{ ENV["ACCOUNT_ACTIVATIONS_URL"] }/account/EmailUpdate?token=#{token}"
+    mail to: new_email, subject: "Mgt_Appメールアドレス変更のご確認"
+  end
+
 end

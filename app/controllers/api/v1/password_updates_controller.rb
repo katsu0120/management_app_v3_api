@@ -1,4 +1,4 @@
-class Api::V1::PasswordResetsController < ApplicationController
+class Api::V1::PasswordUpdatesController < ApplicationController
 
   include UserSessionizeService
 
@@ -25,15 +25,30 @@ class Api::V1::PasswordResetsController < ApplicationController
   end
 
   def update
-    user = current_user
-    if user.update(password_edit_params)
-       msg = "パスワードのリセットが完了しました😄"
+    msg = "パスワードの変更に失敗しました"
+    color = "error"
+    password = password_authentication_params[:new_password]
+    current_user.password = password
+    if current_user.save
+       msg = "パスワードの変更が完了しました😄"
        color = "success"
-    else
-      msg = "パスワードのリセットに失敗しました🙇‍♂️"
-      color = "error"
     end
     render json: { msg: msg, color: color }
+  end
+
+  def password_authentication
+    password = password_authentication_params[:password]
+    # 送られてきたpasswordが正しいか認証
+    authentication = current_user.authenticate(password)
+    msg = "パスワードが違います😭"
+    color = "error"
+    status = false
+    if authentication 
+      msg = "正しいです😄"
+      color = "success"
+      status = true
+    end
+    render json: { msg: msg, color: color, status: status }
   end
 
    private
@@ -44,6 +59,10 @@ class Api::V1::PasswordResetsController < ApplicationController
 
   def password_edit_params
     params.require(:user).permit(:password)
+  end
+
+  def password_authentication_params
+    params.require(:user).permit(:password, :new_password)
   end
   
 
@@ -101,8 +120,5 @@ class Api::V1::PasswordResetsController < ApplicationController
     encode_access_token.payload[:sub]
   end
 
-
+  
 end
-
-
-

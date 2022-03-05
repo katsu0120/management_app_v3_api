@@ -39,7 +39,7 @@ class Api::V1::CompanyTasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :completed)
+    params.require(:task).permit(:title, :content, :completed, :updater)
   end
 
   def task_id_params

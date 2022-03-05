@@ -19,6 +19,14 @@ module UserAuthenticateService
       request.headers["Authorization"]&.split&.last
     end
 
+    # request.headersのトークンをデコードする
+    def decode_access_token
+      User.decode_access_token(token_from_request_headers)
+    rescue UserAuth.not_found_exception_class,
+           JWT::DecodeError, JWT::EncodeError
+      nil
+    end
+
     # access_tokenから有効なユーザーを取得する
     def fetch_user_from_access_token
       User.from_access_token(token_from_request_headers)
@@ -38,4 +46,11 @@ module UserAuthenticateService
       cookies.delete(UserAuth.session_key)
       head(:unauthorized)
     end
+
+    def authenticate_email_changed_active_user
+      (current_user.present? && current_user.activated?) || head(:not_found)
+    end
+
+    
+
 end

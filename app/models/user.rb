@@ -14,10 +14,11 @@ class User < ApplicationRecord
   has_secure_password
 
   # DBに保存せずに済む為、履歴を残さずにtokenを送れる仮想の登録場所のメソッド
-  attr_accessor :activation_token, :reset_token
+  attr_accessor :activation_token, :reset_token, :email_update_token
 
   validates :name, presence: true,
-                   length: { maximum: 30, allow_blank: true }
+                   length: { maximum: 30, allow_blank: true },
+                   uniqueness: true
 
   validates :email, presence: true,
                        email: { allow_blank: true }
@@ -81,9 +82,14 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
-  # 有効化用のメールを送信する
+  # パスワードリセット用のメールを送信する
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  # email変更用のメールを送信する
+  def send_email_update_email(new_email, token)
+    UserMailer.email_update(self, new_email, token).deliver_now
   end
 
   # 渡された文字列のハッシュ値を返す

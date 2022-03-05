@@ -31,7 +31,7 @@ class Api::V1::CompanyProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:user_id, :title, :content, :updated_at, :completed)
+    params.require(:project).permit(:user_id, :title, :content, :updated_at, :completed, :updater)
   end
 
   def project_id_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_041354) do
+ActiveRecord::Schema.define(version: 2022_02_27_104012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_041354) do
     t.boolean "completed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "updater"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_041354) do
     t.boolean "completed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "updater"
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
@@ -65,6 +67,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_041354) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "refresh_jti"
     t.text "user_profile"
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
   add_foreign_key "companies", "users", column: "owner_id"

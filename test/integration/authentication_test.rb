@@ -11,7 +11,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
 
   # プロジェクトapi
   def projects_api(token)
-    get api("/PersonalProjects"), xhr: true, headers: auth(token)
+    get api("/projects"), xhr: true, headers: auth(token)
   end
 
   # 認証メソッドテスト

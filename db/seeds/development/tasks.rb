@@ -21,27 +21,26 @@ users.each do |user|
 end
 
 
+# ーーーーー共有projectsーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-# Companyを持つprojectsのTaskのseedデータ(会社共有projectsに紐づくTask)ーーーーーーーーーーーーーーーーーー
-users.each do |user|
   5.times do |i|
-    # userの最初に紐づいている会社共有のproject1~5に紐づくtasksを作成
-    shared_project_first_tasks = user.related_companies.first.company.projects.first.tasks.create!(title:"#{user.name}CompanyTaskTitle#{i}", content: "#{user.name}CompanyTaskContent#{i}", updater: "#{user.name}")
-    shared_project_second_tasks = user.related_companies.first.company.projects.second.tasks.create!(title:"#{user.name}CompanyTaskTitle#{i}", content: "#{user.name}CompanyTaskContent#{i}", updater: "#{user.name}")
-    shared_project_third_tasks = user.related_companies.first.company.projects.third.tasks.create!(title:"#{user.name}CompanyTaskTitle#{i}", content: "#{user.name}CompanyTaskContent#{i}", updater: "#{user.name}")
-    shared_project_fourth_tasks = user.related_companies.first.company.projects.fourth.tasks.create!(title:"#{user.name}CompanyTaskTitle#{i}", content: "#{user.name}CompanyTaskContent#{i}", updater: "#{user.name}")
-    shared_project_fifth_tasks = user.related_companies.first.company.projects.fifth.tasks.create!(title:"#{user.name}CompanyTaskTitle#{i}", content: "#{user.name}CompanyTaskContent#{i}", updater: "#{user.name}")
+    # company.firstのtasks
+    company_first_project_first_tasks = Company.first.projects.first.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.first.owner.name)
+    company_first_project_second_tasks = Company.first.projects.second.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.first.owner.name)
+    company_first_project_third_tasks = Company.first.projects.third.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.first.owner.name)
+    company_first_project_first_tasks.update!(completed: true)  if i < 2
+    company_first_project_second_tasks.update!(completed: true)  if i < 2
+    company_first_project_third_tasks.update!(completed: true)  if i < 2
 
-    # 最初の2つだけ完了フラグをtrueにする
-    shared_project_first_tasks.update!(completed: true)  if i < 2
-    shared_project_second_tasks.update!(completed: true) if i < 2
-    shared_project_third_tasks.update!(completed: true)  if i < 2
-    shared_project_fourth_tasks.update!(completed: true) if i < 2
-    shared_project_fifth_tasks.update!(completed: true)  if i < 2
+    # company.secondのtasks
+    company_second_project_first_tasks = Company.second.projects.first.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.second.owner.name)
+    company_second_project_second_tasks = Company.second.projects.second.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.second.owner.name)
+    company_second_project_third_tasks = Company.second.projects.third.tasks.create!(title: "テストTitle#{i}", content: "テストContent#{i}", updater: Company.second.owner.name)
+    company_second_project_first_tasks.update!(completed: true)  if i < 2
+    company_second_project_second_tasks.update!(completed: true)  if i < 2
+    company_second_project_third_tasks.update!(completed: true)  if i < 2
 
   end
-end 
-# ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 
 

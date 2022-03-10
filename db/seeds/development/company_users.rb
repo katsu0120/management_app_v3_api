@@ -19,4 +19,4 @@ end
 # end
 
 
-# puts "companyUser = #{CompanyUser.count}"
+puts "companyUser = #{CompanyUser.count}"

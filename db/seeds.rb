@@ -1,6 +1,7 @@
 table_names = %w(
   users
   companies
+  company_users
   projects
   tasks
 )

@@ -5,6 +5,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     @user = active_user
     @params = { auth: { email: @user.email, password: "password" } }
     @access_lifetime = UserAuth.access_token_lifetime
+    @refresh_lifetime = UserAuth.refresh_token_lifetime
     @session_key = UserAuth.session_key.to_s
     @access_token_key = "token"
   end

@@ -1,4 +1,5 @@
 class Api::V1::CompanyProjectsController < ApplicationController
+  before_action :authenticate_active_user
 
   def index 
     company_projects = current_user.following.find_by(id: params[:id])&.projects

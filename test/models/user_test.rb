@@ -121,7 +121,7 @@ class UserTest < ActiveSupport::TestCase
     count = 3
     assert_difference("User.count", count) do
       count.times do |n|
-        User.create(name: "test", email: email, password: "password")
+        User.create(name: "test#{n}", email: email, password: "password")
       end
     end
 

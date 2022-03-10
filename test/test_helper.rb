@@ -48,6 +48,7 @@ class ActiveSupport::TestCase
   def res_body
     JSON.parse(@response.body)
   end
+  
 
 end
 

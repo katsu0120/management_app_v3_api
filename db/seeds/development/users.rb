@@ -1,4 +1,4 @@
-10.times do |n|
+20.times do |n|
   name = "user#{n}"
   email = "#{name}@example.com"
   user = User.find_or_initialize_by(email: email, activated: true)

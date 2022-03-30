@@ -68,10 +68,6 @@ GEM
     byebug (11.1.3)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
-    dotenv (2.7.6)
-    dotenv-rails (2.7.6)
-      dotenv (= 2.7.6)
-      railties (>= 3.2)
     erubi (1.10.0)
     ffi (1.15.4)
     globalid (0.5.2)
@@ -173,7 +169,6 @@ DEPENDENCIES
   bcrypt (~> 3.1, >= 3.1.16)
   bootsnap (>= 1.4.2)
   byebug
-  dotenv-rails
   hirb (~> 0.7.3)
   hirb-unicode-steakknife (~> 0.0.9)
   jwt (~> 2.3)

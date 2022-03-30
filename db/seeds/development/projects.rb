@@ -10,7 +10,7 @@ users.each do |user|
 end
 
 
-# ーーーー下記からは共有のprojectーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+# ーーーー下記からは共有のprojectーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 users.each do |user|
   3.times do |i|

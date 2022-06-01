@@ -39,6 +39,13 @@ gem 'jwt', '~> 2.3'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # RSpec
+  gem 'rspec-rails', '5.1.1'
+  # テストデータ構築用gem RSpec用
+  gem 'factory_bot_rails' 
+  
+  
 end
 
 group :development do
@@ -51,6 +58,9 @@ end
 group :test do
   #テスト結果を色付けする
   gem 'minitest-reporters', '~> 1.1', '>= 1.1.11'
+  # RSpecテストコードを短縮出来る
+  gem 'shoulda-matchers'
+  
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

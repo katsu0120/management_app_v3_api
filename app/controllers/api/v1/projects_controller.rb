@@ -3,11 +3,14 @@ class Api::V1::ProjectsController < ApplicationController
 
   def index
     render json: current_user.projects.where(company_id: nil)
+    # color = "ssssss"
+    # msg = "aaaaa"
+    # render json: { color: color, msg: msg }
   end
   
   def create
     project = current_user.projects.create!(project_params)
-    render json:  project
+    render json: project
   end
 
   def update
